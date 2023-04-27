@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'form.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,33 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(
                   height: 100,
                 ),
-                Form(
-                    child: Column(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 50),
-                        child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: const InputDecoration(
-                              labelText: 'Expense Amount',
-                              border: OutlineInputBorder(),
-                            ))),
-                    Padding(
-                        padding:
-                            const EdgeInsets.only(left: 50, right: 50, top: 10),
-                        child: TextFormField(
-                            textAlign: TextAlign.center,
-                            decoration: const InputDecoration(
-                                labelText: 'Name',
-                                border: OutlineInputBorder()))),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                          onPressed: () {}, child: Text("Submit")),
-                    )
-                  ],
-                )),
+                ExpenseForm(),
                 Spacer()
               ],
             )),
