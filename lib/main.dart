@@ -50,8 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
         child: Scaffold(
-          body: SafeArea(
-              child: Padding(
+          body: Padding(
             padding: const EdgeInsets.all(40),
             child: Center(
                 child: Column(
@@ -83,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Spacer()
               ],
             )),
-          )),
+          ),
         ));
   }
 }
