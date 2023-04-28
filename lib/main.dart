@@ -47,6 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
     HistoryPage(),
   ];
 
+  final List<String> _pageTitles = [
+    "Emu",
+    "Recurring Expenses",
+    "History"
+  ];
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -56,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Emu")),
+      appBar: AppBar(title: Text(_pageTitles[_currentIndex])),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             showDialog(
