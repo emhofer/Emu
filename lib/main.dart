@@ -103,13 +103,23 @@ class OverviewPage extends StatelessWidget {
         child: ListView(
       shrinkWrap: true,
       children: [
+        const Text(
+          "Your expenses",
+          textAlign: TextAlign.center,
+        ),
         Card(
           child: InkWell(
             onTap: () {
               debugPrint('Card tapped.');
             },
             child: ListTile(
-              title: Text("-100"),
+              title: Text(
+                "-100",
+                style: TextStyle(
+                  fontSize: 20, // Change the font size to 20
+                  color: Colors.red, // Change the font color to red
+                ),
+              ),
               subtitle: Text("This year"),
             ),
           ),
@@ -121,7 +131,13 @@ class OverviewPage extends StatelessWidget {
               debugPrint('Card tapped.');
             },
             child: ListTile(
-              title: Text("-15"),
+              title: Text(
+                "-15",
+                style: TextStyle(
+                  fontSize: 20, // Change the font size to 20
+                  color: Colors.red, // Change the font color to red
+                ),
+              ),
               subtitle: Text("This month"),
             ),
           ),
