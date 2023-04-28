@@ -62,13 +62,17 @@ class _MyHomePageState extends State<MyHomePage> {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return MyFormDialog();
+                if (_currentIndex != 1) {
+                  return SingleExpenseForm();
+                } else {
+                  return RecurringExpenseForm();
+                }
               },
             );
           },
           child: const Icon(Icons.add)),
       body: Padding(
-          padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+          padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
           child: _pages.elementAt(_currentIndex)),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -107,6 +111,7 @@ class OverviewPage extends StatelessWidget {
           "Your expenses",
           textAlign: TextAlign.center,
         ),
+        const SizedBox(height: 20),
         Card(
           child: InkWell(
             onTap: () {
@@ -114,17 +119,19 @@ class OverviewPage extends StatelessWidget {
             },
             child: ListTile(
               title: Text(
-                "-100",
+                "-5 632,78",
                 style: TextStyle(
                   fontSize: 20, // Change the font size to 20
                   color: Colors.red, // Change the font color to red
                 ),
               ),
-              subtitle: Text("This year"),
+              subtitle: Text(
+                "This year",
+              ),
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         Card(
           child: InkWell(
             onTap: () {
@@ -132,7 +139,7 @@ class OverviewPage extends StatelessWidget {
             },
             child: ListTile(
               title: Text(
-                "-15",
+                "-964,13",
                 style: TextStyle(
                   fontSize: 20, // Change the font size to 20
                   color: Colors.red, // Change the font color to red
@@ -147,12 +154,12 @@ class OverviewPage extends StatelessWidget {
   }
 }
 
-class MyFormDialog extends StatefulWidget {
+class SingleExpenseForm extends StatefulWidget {
   @override
-  _MyFormDialogState createState() => _MyFormDialogState();
+  _SingleExpenseFormState createState() => _SingleExpenseFormState();
 }
 
-class _MyFormDialogState extends State<MyFormDialog> {
+class _SingleExpenseFormState extends State<SingleExpenseForm> {
   final _formKey = GlobalKey<FormState>();
   int? _amount = 0;
   String _text = "";
@@ -184,6 +191,7 @@ class _MyFormDialogState extends State<MyFormDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      scrollable: true,
       title: const Text('New expense'),
       content: Form(
         key: _formKey,
@@ -214,7 +222,7 @@ class _MyFormDialogState extends State<MyFormDialog> {
             TextFormField(
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter a name';
+                  return 'Please enter a text';
                 }
                 return null;
               },
@@ -258,12 +266,50 @@ class _MyFormDialogState extends State<MyFormDialog> {
   }
 }
 
+class RecurringExpenseForm extends StatefulWidget {
+  const RecurringExpenseForm({super.key});
+
+  @override
+  State<RecurringExpenseForm> createState() => _RecurringExpenseFormState();
+}
+
+class _RecurringExpenseFormState extends State<RecurringExpenseForm> {
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      scrollable: true,
+      title: const Text('New recurring expense'),
+      content: Text("Hello, world!"),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            // Close the dialog
+            Navigator.of(context).pop();
+          },
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              // Save the form data and close the dialog
+              Navigator.of(context).pop();
+            }
+          },
+          child: const Text('Save'),
+        ),
+      ],
+    );
+    ;
+  }
+}
+
 class RecurringPage extends StatelessWidget {
   const RecurringPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Placeholder();
   }
 }
 
@@ -284,20 +330,20 @@ class _HistoryPageState extends State<HistoryPage> {
         for (int i = 0; i < _expenses.length; i++)
           Column(
             children: [
-              Card(
-                child: InkWell(
-                  onTap: () {
-                    debugPrint('Card tapped.');
-                  },
-                  child: ListTile(
-                    title: Text('-${_expenses[i]}'),
-                    subtitle: Text('Expense ${_expenses[i]}'),
-                  ),
+              ListTile(
+                leading: Text(
+                  "-10,00",
+                  style: TextStyle(
+                      fontSize: 20, // Change the font size to 20
+                      color: Colors.red),
                 ),
+                title: Text('Expense ${_expenses[i]}'),
+                subtitle: Text('2023-04-28'),
               ),
               SizedBox(
                 height: 10,
-              )
+              ),
+              Divider()
             ],
           )
       ],
