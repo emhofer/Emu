@@ -35,41 +35,49 @@ class _ExpenseFormState extends State<ExpenseForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        child: Column(
-      children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: TextFormField(
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  labelText: 'Expense Amount',
-                  border: OutlineInputBorder(),
-                ))),
-        Padding(
-            padding: const EdgeInsets.only(left: 50, right: 50, top: 10),
-            child: TextFormField(
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                    labelText: 'Name', border: OutlineInputBorder()))),
-        Padding(
-            padding: const EdgeInsets.only(left: 50, right: 50, top: 10),
-            child: TextFormField(
-              controller: _dateController,
-              textAlign: TextAlign.center,
-              readOnly: true,
-              decoration: const InputDecoration(
-                  labelText: 'Date', border: OutlineInputBorder()),
-              onTap: () async {
-                _selectDate(context);
-              },
-            )),
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: ElevatedButton(onPressed: () {}, child: Text("Submit")),
-        )
-      ],
-    ));
+    return GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Form(
+            child: Column(
+          children: [
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                      labelText: 'Expense Amount',
+                      border: OutlineInputBorder(),
+                    ))),
+            Padding(
+                padding: const EdgeInsets.only(left: 50, right: 50, top: 10),
+                child: TextFormField(
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                        labelText: 'Name', border: OutlineInputBorder()))),
+            Padding(
+                padding: const EdgeInsets.only(left: 50, right: 50, top: 10),
+                child: TextFormField(
+                  controller: _dateController,
+                  textAlign: TextAlign.center,
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                      labelText: 'Date', border: OutlineInputBorder()),
+                  onTap: () async {
+                    _selectDate(context);
+                  },
+                )),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(onPressed: () {}, child: Text("Submit")),
+            )
+          ],
+        )));
   }
 }

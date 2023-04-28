@@ -39,50 +39,76 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _children = [
+    // MyHomePage(),
+    // SearchScreen(),
+    // ProfileScreen(),
+  ];
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(40),
-            child: Center(
-                child: Column(
-              children: [
-                Card(
-                  child: Column(
-                    children: const [
-                      ListTile(
-                        title: Text("-100"),
-                        subtitle: Text("This year"),
-                      )
-                    ],
-                  ),
+    return Scaffold(
+      appBar: AppBar(title: Text("Emu")),
+      floatingActionButton:
+          FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
+      body: Padding(
+        padding: const EdgeInsets.all(40),
+        child: Center(
+            child: ListView(
+          shrinkWrap: true,
+          children: [
+            Card(
+              child: InkWell(
+                onTap: () {
+                  debugPrint('Card tapped.');
+                },
+                child: ListTile(
+                  title: Text("-100"),
+                  subtitle: Text("This year"),
                 ),
-                Card(
-                  child: Column(
-                    children: const [
-                      ListTile(
-                        title: Text("-15"),
-                        subtitle: Text("This month"),
-                      )
-                    ],
-                  ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Card(
+              child: InkWell(
+                onTap: () {
+                  debugPrint('Card tapped.');
+                },
+                child: ListTile(
+                  title: Text("-15"),
+                  subtitle: Text("This month"),
                 ),
-                const SizedBox(
-                  height: 100,
-                ),
-                ExpenseForm(),
-                Spacer()
-              ],
-            )),
+              ),
+            ),
+          ],
+        )),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: onTabTapped,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-        ));
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sync),
+            label: 'Recurring',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'History',
+          ),
+        ],
+      ),
+    );
   }
 }
