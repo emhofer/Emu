@@ -24,29 +24,40 @@ class SqliteService {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
+  Future<List<Expense>> getItems() async {
+    final db = await initializeDB();
+    final List<Map<String, Object?>> queryResult = await db.query(
+      'expenses',
+      orderBy: 'id DESC',
+    );
+    return queryResult.map((e) => Expense.fromMap(e)).toList();
+  }
 }
 
 class Expense {
-  final int id;
+  // final int id;
   final int amount;
   final String description;
   final String date;
 
   Expense(
-      {required this.id,
+      {
+      // required this.id,
       required this.amount,
       required this.description,
       required this.date});
 
   Expense.fromMap(Map<String, dynamic> item)
-      : id = item["id"],
+      :
+        //id = item["id"],
         amount = item["amount"],
         description = item["description"],
         date = item["date"];
 
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      // 'id': id,
       'amount': amount,
       'description': description,
       'date': date

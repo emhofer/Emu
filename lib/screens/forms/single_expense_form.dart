@@ -1,7 +1,12 @@
+import 'package:emu/screens/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sqflite/sqflite.dart';
+import '../../services/sqlite_service.dart';
 
 class SingleExpenseForm extends StatefulWidget {
+  const SingleExpenseForm({Key? key}) : super(key: key);
+
   @override
   _SingleExpenseFormState createState() => _SingleExpenseFormState();
 }
@@ -103,6 +108,10 @@ class _SingleExpenseFormState extends State<SingleExpenseForm> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               // Save the form data and close the dialog
+              var date = _dateController.text.toString();
+              var newExpense =
+                  Expense(amount: _amount!, description: _text, date: date);
+              SqliteService().insertExpense(newExpense);
               Navigator.of(context).pop();
             }
           },
