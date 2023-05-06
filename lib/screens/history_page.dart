@@ -33,12 +33,37 @@ class _HistoryPageState extends State<HistoryPage> {
                     ListTile(
                       leading: Text(
                         '-${expense.amount.toString()}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20, // Change the font size to 20
                             color: Colors.red),
                       ),
                       title: Text(expense.description),
                       subtitle: Text(expense.date),
+                      onLongPress: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Delete expense?"),
+                                content: const Text(
+                                    "Are you sure you want to delete this expense?"),
+                                actions: <Widget>[
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("Cancel")),
+                                  TextButton(
+                                      onPressed: () {
+                                        debugPrint(expense.toString());
+                                        SqliteService().deleteItem(expense.id);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("Delete"))
+                                ],
+                              );
+                            });
+                      },
                     ),
                     Divider()
                   ],

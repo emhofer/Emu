@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -33,31 +34,40 @@ class SqliteService {
     );
     return queryResult.map((e) => Expense.fromMap(e)).toList();
   }
+
+  Future<void> deleteItem(int id) async {
+    final db = await initializeDB();
+    try {
+      await db.delete("expenses", where: "id = ?", whereArgs: [id]);
+    } catch (err) {
+      debugPrint("Something went wrong when deleting an item: $err");
+    }
+  }
 }
 
 class Expense {
-  // final int id;
+  final int id;
   final int amount;
   final String description;
   final String date;
 
   Expense(
       {
-      // required this.id,
+      required this.id,
       required this.amount,
       required this.description,
       required this.date});
 
   Expense.fromMap(Map<String, dynamic> item)
       :
-        //id = item["id"],
+        id = item["id"],
         amount = item["amount"],
         description = item["description"],
         date = item["date"];
 
   Map<String, Object> toMap() {
     return {
-      // 'id': id,
+      // 'id': null,
       'amount': amount,
       'description': description,
       'date': date

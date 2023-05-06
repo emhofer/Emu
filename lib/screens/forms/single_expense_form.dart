@@ -110,7 +110,7 @@ class _SingleExpenseFormState extends State<SingleExpenseForm> {
               // Save the form data and close the dialog
               var date = _dateController.text.toString();
               var newExpense =
-                  Expense(amount: _amount!, description: _text, date: date);
+                  Expense(id: 0, amount: _amount!, description: _text, date: date);
               SqliteService().insertExpense(newExpense);
               Navigator.of(context).pop();
             }
