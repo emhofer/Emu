@@ -1,5 +1,6 @@
 import 'package:emu/services/sqlite_service.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -10,6 +11,8 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   late Future<List<Expense>> _expenses;
+
+  NumberFormat _numberFormat = NumberFormat.decimalPattern("de_AT");
 
   @override
   void initState() {
@@ -32,7 +35,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   children: [
                     ListTile(
                       leading: Text(
-                        '-${expense.amount.toString()}',
+                        '-${_numberFormat.format(expense.amount)}',
                         style: const TextStyle(
                             fontSize: 20, // Change the font size to 20
                             color: Colors.red),
