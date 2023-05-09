@@ -5,16 +5,26 @@ import 'package:path/path.dart';
 class SqliteService {
   Future<Database> initializeDB() async {
     String path = await getDatabasesPath();
-
-    return openDatabase(
+    final database = await openDatabase(
       join(path, 'database.db'),
       onCreate: (db, version) async {
         await db.execute(
-          "CREATE TABLE expenses(id INTEGER PRIMARY KEY AUTOINCREMENT, amount INTEGER NOT NULL, description TEXT NOT NULL, date TEXT NOT NULL)",
+          "CREATE TABLE expenses(id INTEGER PRIMARY KEY AUTOINCREMENT, amount REAL NOT NULL, description TEXT NOT NULL, date TEXT NOT NULL)",
         );
       },
       version: 1,
     );
+    // check if expenses table exists
+    var tableExists = await database.rawQuery(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='expenses'");
+    if (tableExists.isNotEmpty) {
+      return database;
+    } else {
+      await database.execute(
+        "CREATE TABLE expenses(id INTEGER PRIMARY KEY AUTOINCREMENT, amount REAL NOT NULL, description TEXT NOT NULL, date TEXT NOT NULL)",
+      );
+      return database;
+    }
   }
 
   Future<void> insertExpense(Expense expense) async {
@@ -47,20 +57,18 @@ class SqliteService {
 
 class Expense {
   final int id;
-  final int amount;
+  final double amount;
   final String description;
   final String date;
 
   Expense(
-      {
-      required this.id,
+      {required this.id,
       required this.amount,
       required this.description,
       required this.date});
 
   Expense.fromMap(Map<String, dynamic> item)
-      :
-        id = item["id"],
+      : id = item["id"],
         amount = item["amount"],
         description = item["description"],
         date = item["date"];

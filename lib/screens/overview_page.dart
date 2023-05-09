@@ -13,10 +13,10 @@ class OverviewPage extends StatefulWidget {
 
 class _OverviewPageState extends State<OverviewPage> {
   late Future<List<Expense>> _expenses;
-  int sumThisYear = 0;
-  int sumThisMonth = 0;
+  double sumThisYear = 0;
+  double sumThisMonth = 0;
 
-  NumberFormat _numberFormat = NumberFormat.decimalPattern("de_AT");
+  NumberFormat _numberFormat = NumberFormat("#,##0.00", "de_AT");
 
   @override
   void initState() {

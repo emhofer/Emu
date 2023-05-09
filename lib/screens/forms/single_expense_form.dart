@@ -13,7 +13,7 @@ class SingleExpenseForm extends StatefulWidget {
 
 class _SingleExpenseFormState extends State<SingleExpenseForm> {
   final _formKey = GlobalKey<FormState>();
-  int? _amount = 0;
+  double? _amount = 0;
   String _text = "";
   TextEditingController _dateController = TextEditingController(
       text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
@@ -62,10 +62,10 @@ class _SingleExpenseFormState extends State<SingleExpenseForm> {
                   if (value.isEmpty) {
                     _amount = null;
                   }
-                  _amount = int.tryParse(value);
+                  _amount = double.tryParse(value.replaceAll(',', '.'));
                 });
               },
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Amount'),
               style: const TextStyle(
                 fontSize: 24,
@@ -109,8 +109,8 @@ class _SingleExpenseFormState extends State<SingleExpenseForm> {
             if (_formKey.currentState!.validate()) {
               // Save the form data and close the dialog
               var date = _dateController.text.toString();
-              var newExpense =
-                  Expense(id: 0, amount: _amount!, description: _text, date: date);
+              var newExpense = Expense(
+                  id: 0, amount: _amount!, description: _text, date: date);
               SqliteService().insertExpense(newExpense);
               Navigator.of(context).pop();
             }

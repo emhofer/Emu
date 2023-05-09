@@ -12,7 +12,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   late Future<List<Expense>> _expenses;
 
-  NumberFormat _numberFormat = NumberFormat.decimalPattern("de_AT");
+  NumberFormat _numberFormat = NumberFormat("#,##0.00", "de_AT");
 
   @override
   void initState() {
