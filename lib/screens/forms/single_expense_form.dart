@@ -5,7 +5,10 @@ import 'package:sqflite/sqflite.dart';
 import '../../services/sqlite_service.dart';
 
 class SingleExpenseForm extends StatefulWidget {
-  const SingleExpenseForm({Key? key}) : super(key: key);
+  final Function() updateExpenseList;
+
+  const SingleExpenseForm({Key? key, required this.updateExpenseList})
+      : super(key: key);
 
   @override
   _SingleExpenseFormState createState() => _SingleExpenseFormState();
@@ -112,6 +115,7 @@ class _SingleExpenseFormState extends State<SingleExpenseForm> {
               var newExpense = Expense(
                   id: 0, amount: _amount!, description: _text, date: date);
               SqliteService().insertExpense(newExpense);
+              widget.updateExpenseList();
               Navigator.of(context).pop();
             }
           },
