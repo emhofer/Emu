@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emu/services/sqlite_service.dart';
 import 'package:intl/intl.dart';
+import './filtered_history_page.dart';
 
 class OverviewPage extends StatefulWidget {
   final List<Expense> expenses;
@@ -46,6 +47,17 @@ class _OverviewPageState extends State<OverviewPage> {
     }
   }
 
+  void navigateToFilteredHistoryPage(DateTime filter) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => FilteredHistoryPage(
+                expenses: widget.expenses,
+                filter: filter,
+              )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -61,6 +73,7 @@ class _OverviewPageState extends State<OverviewPage> {
           child: InkWell(
             onTap: () {
               debugPrint('Card tapped.');
+              navigateToFilteredHistoryPage(DateTime.now());
             },
             child: ListTile(
               title: Text(
