@@ -17,64 +17,69 @@ class FilteredHistoryPage extends StatefulWidget {
 }
 
 class _FilteredHistoryPageState extends State<FilteredHistoryPage> {
-  // late Future<List<Expense>> _expenses;
-
   NumberFormat _numberFormat = NumberFormat("#,##0.00", "de_AT");
+  var _testExpenses;
 
   @override
   void initState() {
     super.initState();
     // _expenses = SqliteService().getItems();
+    _testExpenses = widget.expenses
+        .where((element) =>
+            element.date.substring(0, 4) == widget.filter.year.toString())
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
-    // return ListView(
-    //   children: <Widget>[
-    //     for (Expense expense in widget.expenses)
-    //       Column(
-    //         children: [
-    //           ListTile(
-    //             leading: Text(
-    //               '-${_numberFormat.format(expense.amount)}',
-    //               style: const TextStyle(
-    //                   fontSize: 20, // Change the font size to 20
-    //                   color: Colors.red),
-    //             ),
-    //             title: Text(expense.description),
-    //             subtitle: Text(expense.date),
-    //             onLongPress: () {
-    //               showDialog(
-    //                   context: context,
-    //                   builder: (BuildContext context) {
-    //                     return AlertDialog(
-    //                       title: const Text("Delete expense?"),
-    //                       content: const Text(
-    //                           "Are you sure you want to delete this expense?"),
-    //                       actions: <Widget>[
-    //                         TextButton(
-    //                             onPressed: () {
-    //                               Navigator.of(context).pop();
-    //                             },
-    //                             child: const Text("Cancel")),
-    //                         TextButton(
-    //                             onPressed: () {
-    //                               debugPrint(expense.toString());
-    //                               SqliteService().deleteItem(expense.id);
-    //                               // widget.updateExpenseList();
-    //                               Navigator.of(context).pop();
-    //                             },
-    //                             child: const Text("Delete"))
-    //                       ],
-    //                     );
-    //                   });
-    //             },
-    //           ),
-    //           Divider()
-    //         ],
-    //       )
-    //   ],
-    // );
+    // return Placeholder();
+    return Scaffold(
+      body: ListView(
+        children: <Widget>[
+          for (Expense expense in _testExpenses)
+            Column(
+              children: [
+                ListTile(
+                  leading: Text(
+                    '-${_numberFormat.format(expense.amount)}',
+                    style: const TextStyle(
+                        fontSize: 20, // Change the font size to 20
+                        color: Colors.red),
+                  ),
+                  title: Text(expense.description),
+                  subtitle: Text(expense.date),
+                  onLongPress: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Delete expense?"),
+                            content: const Text(
+                                "Are you sure you want to delete this expense?"),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Cancel")),
+                              TextButton(
+                                  onPressed: () {
+                                    debugPrint(expense.toString());
+                                    SqliteService().deleteItem(expense.id);
+                                    // widget.updateExpenseList();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Delete"))
+                            ],
+                          );
+                        });
+                  },
+                ),
+                Divider()
+              ],
+            )
+        ],
+      ),
+    );
   }
 }
