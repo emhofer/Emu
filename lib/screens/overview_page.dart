@@ -47,7 +47,7 @@ class _OverviewPageState extends State<OverviewPage> {
     }
   }
 
-  void navigateToFilteredHistoryPage(DateTime filter) {
+  void navigateToFilteredHistoryPage(String filter) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -73,7 +73,7 @@ class _OverviewPageState extends State<OverviewPage> {
           child: InkWell(
             onTap: () {
               debugPrint('Card tapped.');
-              navigateToFilteredHistoryPage(DateTime.now());
+              navigateToFilteredHistoryPage("year");
             },
             child: ListTile(
               title: Text(
@@ -94,6 +94,7 @@ class _OverviewPageState extends State<OverviewPage> {
           child: InkWell(
             onTap: () {
               debugPrint('Card tapped.');
+              navigateToFilteredHistoryPage("month");
             },
             child: ListTile(
               title: Text(

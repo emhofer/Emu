@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 class FilteredHistoryPage extends StatefulWidget {
   final List<Expense> expenses;
-  final DateTime filter;
+  final String filter;
   // final Function() updateExpenseList;
 
   const FilteredHistoryPage(
@@ -24,10 +24,17 @@ class _FilteredHistoryPageState extends State<FilteredHistoryPage> {
   void initState() {
     super.initState();
     // _expenses = SqliteService().getItems();
-    _testExpenses = widget.expenses
-        .where((element) =>
-            element.date.substring(0, 4) == widget.filter.year.toString())
-        .toList();
+    _testExpenses = widget.expenses.where((element) {
+      if (widget.filter == "year") {
+        return element.date.substring(0, 4) ==
+            DateTime.now().toString().substring(0, 4);
+      } else if (widget.filter == "month") {
+        return element.date.substring(5, 7) ==
+            DateTime.now().toString().substring(5, 7);
+      } else {
+        return true;
+      }
+    }).toList();
   }
 
   @override
