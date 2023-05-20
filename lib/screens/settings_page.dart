@@ -5,6 +5,15 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return Column(
+      children: [
+        Divider(),
+        TextButton(
+          child: Text("Export data"),
+          onPressed: () {},
+        ),
+        Divider()
+      ],
+    );
   }
 }
